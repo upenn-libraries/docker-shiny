@@ -1,9 +1,7 @@
 Docker for Shiny Server
 =======================
 
-This is a Dockerfile for Shiny Server on Debian "testing". It is based on the r-base image.
-
-The image is available from [Docker Hub](https://registry.hub.docker.com/u/rocker/shiny/).
+This is a Dockerfile for Shiny Server on Debian "testing". It is based on the r-base image. It is a modified fork of the [Rocker Project's Shiny repository](https://github.com/rocker-org/shiny).
 
 As of January 2017, the Shiny Server log is written to `stdout` and can be viewed using `docker logs`. The logs for individual apps are in the `/var/log/shiny-server` directory, as described in the [Shiny Server Administrator's Guide]( http://docs.rstudio.com/shiny-server/#application-error-logs)
 
@@ -43,18 +41,16 @@ This repository includes an example `docker-compose` file, to facilitate using t
 
 #### To run a container with Shiny Server:
 
+First, place your Shiny app in the `mountpoints/apps/the-name-of-the-app` directory, replacing `the-name-of-the-app` with your app's name. You can install dependencies to the Shiny server by including the `packrat/src` file for that project (if you have [enabled Packrat](https://rstudio.github.io/packrat/rstudio.html)).
+
+Then, run
+
 ```sh
+docker-compose build
 docker-compose up
 ```
 
 Then visit `http://localhost` (i.e., `http://localhost:80`) in a web browser. If you have an app in `/srv/shinyapps/appdir`, you can run the app by visiting http://localhost/appdir/.
-
-#### To add a Shiny app:
-
-1. Uncomment the last line of `docker-compose.yml`.
-1. Place the app in `mountpoints/apps/the-name-of-the-app`, replacing `the-name-of-the-app` with your app's name.
-
-If you have an app in `mountpoints/apps/appdir`, you can run the app by visiting http://localhost/appdir/. (If using boot2docker, visit http://192.168.59.103:3838/appdir/)
 
 #### Logs
 
